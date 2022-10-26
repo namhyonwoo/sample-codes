@@ -1,0 +1,26 @@
+
+import com.wordvice.experteditingv0.config.servlet.LoggingFilter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.filter.OrderedFilter;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import java.util.Collections;
+
+@Configuration
+@RequiredArgsConstructor
+public class WebMvcConfig implements WebMvcConfigurer {
+
+    @Bean
+    public FilterRegistrationBean<LoggingFilter> requestResponseLoggingFilter() {
+        FilterRegistrationBean<LoggingFilter> filterRegBean = new FilterRegistrationBean<>();
+        filterRegBean.setFilter(new LoggingFilter());
+        filterRegBean.setName("Logback access-logging request response filter");
+        filterRegBean.setUrlPatterns(Collections.singleton("*"));
+        filterRegBean.setOrder(OrderedFilter.REQUEST_WRAPPER_FILTER_MAX_ORDER);
+        return filterRegBean;
+    }
+
+
+}
